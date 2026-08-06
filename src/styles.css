@@ -140,5 +140,100 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
   }
 }
+
+/* ---------------- Brand / document tokens ---------------- */
+:root {
+  --brand-navy: oklch(0.28 0.098 264);
+  --brand-navy-deep: oklch(0.23 0.09 264);
+  --brand-orange: oklch(0.653 0.202 40);
+  --brand-grey: oklch(0.968 0.004 264);
+  --brand-grey-line: oklch(0.9 0.006 264);
+  --brand-ink: oklch(0.32 0.03 264);
+  --shadow-panel: 0 1px 2px oklch(0.28 0.098 264 / 0.06), 0 12px 32px -12px oklch(0.28 0.098 264 / 0.18);
+  --shadow-page: 0 24px 60px -20px oklch(0.28 0.098 264 / 0.35);
+}
+
+@theme inline {
+  --color-navy: var(--brand-navy);
+  --color-navy-deep: var(--brand-navy-deep);
+  --color-orange: var(--brand-orange);
+  --color-brand-grey: var(--brand-grey);
+  --color-brand-line: var(--brand-grey-line);
+  --color-brand-ink: var(--brand-ink);
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Poppins", sans-serif;
+  --shadow-panel: var(--shadow-panel);
+  --shadow-page: var(--shadow-page);
+}
+
+/* ---------------- A4 document ---------------- */
+.a4-page {
+  width: 210mm;
+  height: 297mm;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  color: var(--brand-navy);
+  break-after: page;
+  page-break-after: always;
+}
+.a4-page:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+@utility fade-up {
+  animation: fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  #print-root {
+    position: absolute;
+    inset: 0;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+  }
+  #print-root .page-scaler {
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+  .a4-page {
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
