@@ -574,7 +574,7 @@ function ContactPage({ data }: { data: Quotation }) {
         style={{ left: "24mm", right: "24mm", top: "246mm", fontSize: "3.2mm", color: "#33405a" }}
       >
         24/7 Support Center: Call us on +91 8898648592 | +91 8097018757: Or Mail us on
-        support@immensesmartsolutions.com
+        support@immenseair.com
         <div className="font-semibold italic" style={{ color: NAVY, marginTop: "2.5mm" }}>
           &ldquo;Any Changes in rules and Regulations by Company, TRAI or Operator will be Applicable
           with effect from the date communicated&rdquo;
@@ -587,8 +587,8 @@ function ContactPage({ data }: { data: Quotation }) {
       >
         <div>
           02240136508 &nbsp;|&nbsp;{" "}
-          <span style={{ color: "#1857c8" }}>info@immensesmartsolutions.com</span> &nbsp;|&nbsp;{" "}
-          <span style={{ color: "#1857c8" }}>www.immensesmartsolutions.com</span>
+          <span style={{ color: "#1857c8" }}>info@immenseair.com</span> &nbsp;|&nbsp;{" "}
+          <span style={{ color: "#1857c8" }}>www.immenseair.com</span>
         </div>
         <div>9 Business Bay, Office 404, Off Link Road, Malad West, Mumbai, 400064</div>
       </div>

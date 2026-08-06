@@ -1,6 +1,6 @@
 /** Shared brand primitives that reproduce the Immense Smart Solution proposal template. */
 
-import logoAsset from "@/assets/immense-logo.png.asset.json";
+import logoAsset from "@/assets/immense-air-logo.png.asset.json";
 
 export const NAVY = "#0f2a5f";
 export const ORANGE = "#f2591f";
@@ -9,7 +9,7 @@ export function LogoMark({ size = 46 }: { size?: number }) {
   return (
     <img
       src={logoAsset.url}
-      alt="Immense Smart Solution logo"
+      alt="Immense Air Pvt Ltd logo"
       width={size}
       height={size * 1.05}
       style={{ width: size, height: size * 1.05, objectFit: "contain" }}
@@ -29,7 +29,7 @@ export function BrandHeader({ compact = false }: { compact?: boolean }) {
           className="font-display font-extrabold tracking-tight"
           style={{ color: NAVY, fontSize: compact ? "5.4mm" : "6mm" }}
         >
-          IMMENSE SMART SOLUTION
+          IMMENSE AIR PVT LTD
         </div>
         <div className="mt-[1.6mm] font-semibold" style={{ fontSize: "3.1mm", color: NAVY }}>
           Smart Communication. <span style={{ color: ORANGE }}>Stronger Results.</span>
@@ -105,8 +105,8 @@ export function CornerBlob() {
 
 /** Navy footer bar with the orange wave, used on every page. */
 export function PageFooter({
-  site = "www.immensesmartsolutions.com",
-  email = "info@immensesmartsolutions.com",
+  site = "www.immenseair.com",
+  email = "info@immenseair.com",
   phone = "+91 2245 00 3131",
 }: {
   site?: string;
