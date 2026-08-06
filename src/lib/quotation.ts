@@ -84,7 +84,7 @@ export const defaultQuotation = (): Quotation => ({
     name: "Rushikesh Limje",
     designation: "Sales & Marketing Manager",
     mobile: "+91 9768566466",
-    email: "sales@immensesmartsolutions.in",
+    email: "sales@immenseair.com",
   },
   products: [
     {
