@@ -472,7 +472,7 @@ function ContactPage({ data }: { data: Quotation }) {
         </div>
       </div>
 
-      <div className="absolute flex items-center gap-[5mm]" style={{ left: "26mm", right: "22mm", top: "104mm" }}>
+      <div className="absolute flex items-center gap-[5mm]" style={{ left: "26mm", right: "22mm", top: "100mm" }}>
         <span
           className="flex items-center justify-center rounded-full"
           style={{ width: "15mm", height: "15mm", background: NAVY, flexShrink: 0 }}
@@ -491,7 +491,7 @@ function ContactPage({ data }: { data: Quotation }) {
         style={{
           left: "34mm",
           right: "26mm",
-          top: "124mm",
+          top: "118mm",
           border: "0.3mm solid #dfe4ee",
           borderRadius: "3mm",
           padding: "3mm 5mm",
@@ -502,7 +502,7 @@ function ContactPage({ data }: { data: Quotation }) {
             key={k}
             className="flex items-center gap-[4mm]"
             style={{
-              padding: "2.4mm 0",
+              padding: "1.4mm 0",
               borderBottom: i < bank.length - 1 ? "0.25mm solid #edf0f5" : "none",
               fontSize: "3.5mm",
             }}
@@ -522,7 +522,7 @@ function ContactPage({ data }: { data: Quotation }) {
         ))}
       </div>
 
-      <div className="absolute flex items-center gap-[5mm]" style={{ left: "26mm", right: "22mm", top: "186mm" }}>
+      <div className="absolute flex items-center gap-[5mm]" style={{ left: "26mm", right: "22mm", top: "184mm" }}>
         <span
           className="flex items-center justify-center rounded-full"
           style={{ width: "14mm", height: "14mm", background: NAVY, flexShrink: 0 }}
@@ -536,7 +536,7 @@ function ContactPage({ data }: { data: Quotation }) {
         <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
       </div>
 
-      <ul className="absolute" style={{ left: "42mm", top: "202mm", fontSize: "3.5mm", color: "#33405a" }}>
+      <ul className="absolute" style={{ left: "42mm", top: "198mm", fontSize: "3.5mm", color: "#33405a" }}>
         {[
           "No Service taxes.",
           "Rates are non-negotiable.",
@@ -558,7 +558,7 @@ function ContactPage({ data }: { data: Quotation }) {
         ))}
       </ul>
 
-      <div className="absolute inset-x-0 flex items-center justify-center gap-[4mm]" style={{ top: "224mm" }}>
+      <div className="absolute inset-x-0 flex items-center justify-center gap-[4mm]" style={{ top: "228mm" }}>
         <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
         <span style={{ width: "16mm", height: "1mm", background: ORANGE }} />
         <span className="font-display font-black" style={{ color: ORANGE, fontSize: "12mm" }}>
@@ -570,7 +570,7 @@ function ContactPage({ data }: { data: Quotation }) {
 
       <div
         className="absolute text-center"
-        style={{ left: "24mm", right: "24mm", top: "244mm", fontSize: "3.2mm", color: "#33405a" }}
+        style={{ left: "24mm", right: "24mm", top: "246mm", fontSize: "3.2mm", color: "#33405a" }}
       >
         24/7 Support Center: Call us on +91 8898648592 | +91 8097018757: Or Mail us on
         support@immensesmartsolutions.com
@@ -581,12 +581,14 @@ function ContactPage({ data }: { data: Quotation }) {
       </div>
 
       <div
-        className="absolute text-right"
-        style={{ right: "20mm", top: "260mm", fontSize: "3mm", color: "#33405a", lineHeight: 1.7 }}
+        className="absolute text-center"
+        style={{ left: "20mm", right: "20mm", top: "266mm", fontSize: "3mm", color: "#33405a", lineHeight: 1.6 }}
       >
-        <div>02240136508</div>
-        <div style={{ color: "#1857c8" }}>info@immensesmartsolutions.com</div>
-        <div style={{ color: "#1857c8" }}>www.immensesmartsolutions.com</div>
+        <div>
+          02240136508 &nbsp;|&nbsp;{" "}
+          <span style={{ color: "#1857c8" }}>info@immensesmartsolutions.com</span> &nbsp;|&nbsp;{" "}
+          <span style={{ color: "#1857c8" }}>www.immensesmartsolutions.com</span>
+        </div>
         <div>9 Business Bay, Office 404, Off Link Road, Malad West, Mumbai, 400064</div>
       </div>
 
