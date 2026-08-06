@@ -53,14 +53,15 @@ function CoverPage({ data }: { data: Quotation }) {
         <LogoMark size={58} />
         <div className="leading-none">
           <div className="font-display font-extrabold" style={{ color: NAVY, fontSize: "8mm" }}>
-            IMMENSE SMART
+            IMMENSE AIR
           </div>
           <div
             className="font-display font-extrabold mt-[1.5mm]"
             style={{ color: ORANGE, fontSize: "8mm" }}
           >
-            SOLUTION
+            PVT LTD
           </div>
+
         </div>
       </div>
       <div className="absolute left-[16mm] top-[38mm]" style={{ fontSize: "4mm", color: NAVY }}>
