@@ -29,7 +29,7 @@ export function BrandHeader({ compact = false }: { compact?: boolean }) {
           className="font-display font-extrabold tracking-tight"
           style={{ color: NAVY, fontSize: compact ? "5.4mm" : "6mm" }}
         >
-          IMMENSE AIR PVT LTD
+          IMMENSE SMART SOLUTION
         </div>
         <div className="mt-[1.6mm] font-semibold" style={{ fontSize: "3.1mm", color: NAVY }}>
           Smart Communication. <span style={{ color: ORANGE }}>Stronger Results.</span>
