@@ -1,18 +1,19 @@
-/** Shared brand primitives that reproduce the Immense Air proposal template. */
+/** Shared brand primitives that reproduce the Immense Smart Solution proposal template. */
+
+import logoAsset from "@/assets/immense-logo.png.asset.json";
 
 export const NAVY = "#0f2a5f";
 export const ORANGE = "#f2591f";
 
 export function LogoMark({ size = 46 }: { size?: number }) {
   return (
-    <svg width={size} height={size * 1.05} viewBox="0 0 60 63" fill="none" aria-hidden="true">
-      <path
-        d="M8 62V22C8 10.95 16.95 2 28 2h4c11.05 0 20 8.95 20 20v40h-13V22c0-3.87-3.13-7-7-7h-4c-3.87 0-7 3.13-7 7v40H8Z"
-        fill={NAVY}
-      />
-      <circle cx="30" cy="26" r="7.5" fill="#fff" />
-      <rect x="23" y="38" width="14" height="7" rx="3.5" fill={NAVY} />
-    </svg>
+    <img
+      src={logoAsset.url}
+      alt="Immense Smart Solution logo"
+      width={size}
+      height={size * 1.05}
+      style={{ width: size, height: size * 1.05, objectFit: "contain" }}
+    />
   );
 }
 
