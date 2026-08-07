@@ -274,8 +274,14 @@ function PartyBlock({
 
 function ProductPage({ product }: { product: Product }) {
   const total = computeTotal(product.pricing);
+  const k = product.key;
+  const titleFx = useFocusProps(`${k}:title`, "absolute inset-x-0");
+  const introFx = useFocusProps(`${k}:intro`, "absolute text-center leading-[1.8]");
+  const subFx = useFocusProps(`${k}:sub`, "absolute flex items-center gap-[4mm]");
+  const priceFx = useFocusProps(`${k}:pricing`, "absolute");
+  const bulletFx = useFocusProps(`${k}:bullets`, "absolute");
   return (
-    <section className="a4-page shadow-page">
+    <section id={`page-${k}`} data-page={k} className="a4-page shadow-page">
       <CornerBlob />
       <DotGrid className="absolute left-[12mm] top-[8mm]" rows={4} cols={6} gap={4.2} />
       <BrandHeader compact />
@@ -288,19 +294,19 @@ function ProductPage({ product }: { product: Product }) {
         color="#d6dbe6"
       />
 
-      <div className="absolute inset-x-0" style={{ top: "42mm" }}>
+      <div {...titleFx} style={{ top: "42mm" }}>
         <RibbonTitle>{product.title}</RibbonTitle>
       </div>
 
       <p
-        className="absolute text-center leading-[1.8]"
+        {...introFx}
         style={{ left: "26mm", right: "26mm", top: "60mm", fontSize: "3.5mm", color: "#3c4a63" }}
       >
         <strong style={{ color: NAVY }}>Immense Smart Solution</strong>{" "}
         {product.intro.replace(/^Immense Smart Solution\s*/, "")}
       </p>
 
-      <div className="absolute flex items-center gap-[4mm]" style={{ left: "20mm", top: "88mm" }}>
+      <div {...subFx} style={{ left: "20mm", right: "20mm", top: "88mm" }}>
         <span
           className="flex items-center justify-center rounded-full font-bold"
           style={{
@@ -315,14 +321,22 @@ function ProductPage({ product }: { product: Product }) {
         </span>
         <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
         <span style={{ width: "2.6mm", height: "2.6mm", borderRadius: 99, background: ORANGE }} />
-        <span className="font-display font-extrabold" style={{ color: ORANGE, fontSize: "6mm" }}>
-          {product.subTitle}
+        <span className="min-w-0 flex-shrink" style={{ maxWidth: "96mm" }}>
+          <AutoFit
+            size={6}
+            maxLines={2}
+            align="center"
+            className="font-display font-extrabold"
+            style={{ color: ORANGE }}
+          >
+            {product.subTitle}
+          </AutoFit>
         </span>
         <span style={{ width: "2.6mm", height: "2.6mm", borderRadius: 99, background: ORANGE }} />
         <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
       </div>
 
-      <div className="absolute" style={{ left: "24mm", right: "24mm", top: "108mm" }}>
+      <div {...priceFx} style={{ left: "24mm", right: "24mm", top: "108mm" }}>
         {product.tables.map((t, i) => (
           <table
             key={i}
@@ -372,8 +386,16 @@ function ProductPage({ product }: { product: Product }) {
       </div>
 
       <ul
-        className="absolute"
-        style={{ left: "24mm", right: "20mm", top: "168mm", fontSize: "3.35mm", color: "#33405a" }}
+        {...bulletFx}
+        style={{
+          left: "24mm",
+          right: "20mm",
+          top: "168mm",
+          bottom: "22mm",
+          overflow: "hidden",
+          fontSize: "3.35mm",
+          color: "#33405a",
+        }}
       >
         {product.bullets.slice(0, 13).map((b, i) => (
           <li key={i} className="flex gap-[3.5mm]" style={{ marginBottom: "3.2mm" }}>
@@ -405,6 +427,7 @@ function Th({ children, small }: { children: React.ReactNode; small?: boolean })
         color: "#fff",
         padding: small ? "2.6mm" : "3.4mm",
         fontWeight: 600,
+        overflowWrap: "anywhere",
         border: "0.3mm solid #fff",
       }}
     >
@@ -429,6 +452,7 @@ function Td({
         textAlign: "center",
         fontWeight: 600,
         color: highlight ? ORANGE : NAVY,
+        overflowWrap: "anywhere",
         border: "0.3mm solid #d7dce7",
       }}
     >
@@ -448,8 +472,10 @@ function ContactPage({ data }: { data: Quotation }) {
     ["Account Type", "Current", "doc"],
     ["IFSC Code", "HDFC0000411", "doc"],
   ];
+  const mgrFx = useFocusProps("manager:card", "absolute flex gap-[6mm]");
+  const footFx = useFocusProps("contact:footer", "absolute text-center");
   return (
-    <section className="a4-page shadow-page">
+    <section id="page-contact" data-page="contact" className="a4-page shadow-page">
       <CornerBlob />
       <DotGrid className="absolute left-[12mm] top-[8mm]" rows={4} cols={6} gap={4.2} />
       <BrandHeader compact />
@@ -464,37 +490,44 @@ function ContactPage({ data }: { data: Quotation }) {
         <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
       </div>
 
-      <div className="absolute flex gap-[6mm]" style={{ left: "26mm", top: "62mm" }}>
+      <div {...mgrFx} style={{ left: "26mm", right: "26mm", top: "62mm" }}>
         <span
           className="flex items-center justify-center rounded-full"
-          style={{ width: "18mm", height: "18mm", background: NAVY }}
+          style={{ width: "18mm", height: "18mm", background: NAVY, flexShrink: 0 }}
         >
           <Glyph name="user" size={10} />
         </span>
-        <div style={{ borderLeft: `0.5mm solid ${ORANGE}`, paddingLeft: "5mm" }}>
-          <div className="font-bold" style={{ color: NAVY, fontSize: "5.4mm" }}>
+        <div
+          className="min-w-0 flex-1"
+          style={{ borderLeft: `0.5mm solid ${ORANGE}`, paddingLeft: "5mm", maxWidth: "120mm" }}
+        >
+          <AutoFit size={5.4} maxLines={2} className="font-bold" style={{ color: NAVY }}>
             {data.manager.name || "—"}
-          </div>
-          <div style={{ color: "#3c4a63", fontSize: "3.8mm", marginTop: "1mm" }}>
+          </AutoFit>
+          <AutoFit size={3.8} maxLines={2} style={{ color: "#3c4a63", marginTop: "1mm" }}>
             {data.manager.designation}
-          </div>
-          <div className="flex items-center gap-[2.5mm]" style={{ marginTop: "2.5mm" }}>
+          </AutoFit>
+          <div className="flex min-w-0 items-center gap-[2.5mm]" style={{ marginTop: "2.5mm" }}>
             <span
               className="flex items-center justify-center rounded-full"
-              style={{ width: "5.6mm", height: "5.6mm", background: ORANGE }}
+              style={{ width: "5.6mm", height: "5.6mm", background: ORANGE, flexShrink: 0 }}
             >
               <Glyph name="phone" size={3.2} />
             </span>
-            <span style={{ fontSize: "3.7mm", color: NAVY }}>{data.manager.mobile}</span>
+            <AutoFit size={3.7} maxLines={1} style={{ color: NAVY }}>
+              {data.manager.mobile}
+            </AutoFit>
           </div>
-          <div className="flex items-center gap-[2.5mm]" style={{ marginTop: "2mm" }}>
+          <div className="flex min-w-0 items-center gap-[2.5mm]" style={{ marginTop: "2mm" }}>
             <span
               className="flex items-center justify-center rounded-full"
-              style={{ width: "5.6mm", height: "5.6mm", background: ORANGE }}
+              style={{ width: "5.6mm", height: "5.6mm", background: ORANGE, flexShrink: 0 }}
             >
               <Glyph name="mail" size={3.2} />
             </span>
-            <span style={{ fontSize: "3.7mm", color: "#1857c8" }}>{data.manager.email}</span>
+            <AutoFit size={3.7} maxLines={1} style={{ color: "#1857c8" }}>
+              {data.manager.email}
+            </AutoFit>
           </div>
         </div>
       </div>
@@ -608,7 +641,7 @@ function ContactPage({ data }: { data: Quotation }) {
       </div>
 
       <div
-        className="absolute text-center"
+        {...footFx}
         style={{ left: "20mm", right: "20mm", top: "266mm", fontSize: "3mm", color: "#33405a", lineHeight: 1.6 }}
       >
         <div>
