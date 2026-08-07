@@ -150,7 +150,7 @@ function CoverPage({ data }: { data: Quotation }) {
       <div
         className="absolute left-[16mm] flex items-center justify-between"
         style={{
-          top: "180mm",
+          top: "190mm",
           width: "120mm",
           background: "#f4f6fa",
           borderRadius: "2.5mm",
@@ -173,7 +173,7 @@ function CoverPage({ data }: { data: Quotation }) {
       <div
         className="absolute left-[16mm] flex items-center justify-between"
         style={{
-          top: "196mm",
+          top: "206mm",
           width: "178mm",
           background: "#f4f6fa",
           borderRadius: "3mm",
@@ -200,7 +200,7 @@ function CoverPage({ data }: { data: Quotation }) {
       </div>
 
       {/* tagline */}
-      <div className="absolute left-[16mm] flex" style={{ top: "232mm" }}>
+      <div className="absolute left-[16mm] flex" style={{ top: "242mm" }}>
         <div
           className="flex items-center justify-center"
           style={{ width: "36mm", height: "26mm", background: ORANGE, borderRadius: "2mm 0 0 2mm" }}
@@ -278,8 +278,8 @@ function ProductPage({ product }: { product: Product }) {
   const titleFx = useFocusProps(`${k}:title`, "absolute inset-x-0");
   const introFx = useFocusProps(`${k}:intro`, "absolute text-center leading-[1.8]");
   const subFx = useFocusProps(`${k}:sub`, "absolute flex items-center gap-[4mm]");
-  const priceFx = useFocusProps(`${k}:pricing`, "absolute");
-  const bulletFx = useFocusProps(`${k}:bullets`, "absolute");
+  const priceFx = useFocusProps(`${k}:pricing`, "");
+  const bulletFx = useFocusProps(`${k}:bullets`, "");
   return (
     <section id={`page-${k}`} data-page={k} className="a4-page shadow-page">
       <CornerBlob />
@@ -336,83 +336,88 @@ function ProductPage({ product }: { product: Product }) {
         <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
       </div>
 
-      <div {...priceFx} style={{ left: "24mm", right: "24mm", top: "108mm" }}>
-        {product.tables.map((t, i) => (
-          <table
-            key={i}
-            className="w-full"
-            style={{ borderCollapse: "collapse", marginBottom: "4mm", fontSize: "3.6mm" }}
-          >
+      <div
+        className="absolute flex flex-col"
+        style={{ left: "20mm", right: "20mm", top: "108mm", bottom: "22mm", overflow: "hidden" }}
+      >
+        <div {...priceFx} style={{ marginLeft: "4mm", marginRight: "4mm", flexShrink: 0 }}>
+          {product.tables.map((t, i) => (
+            <table
+              key={i}
+              className="w-full"
+              style={{ borderCollapse: "collapse", marginBottom: "4mm", fontSize: "3.6mm" }}
+            >
+              <thead>
+                <tr>
+                  <Th>{t.slabLabel}</Th>
+                  <Th>{t.rateLabel}</Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td>{t.slabValue}</Td>
+                  <Td>{t.rateValue}</Td>
+                </tr>
+              </tbody>
+            </table>
+          ))}
+
+          <table className="w-full" style={{ borderCollapse: "collapse", fontSize: "3.3mm" }}>
             <thead>
               <tr>
-                <Th>{t.slabLabel}</Th>
-                <Th>{t.rateLabel}</Th>
+                <Th small>Setup Charges</Th>
+                <Th small>Monthly Charges</Th>
+                <Th small>Price</Th>
+                <Th small>GST (%)</Th>
+                <Th small>Final Total</Th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <Td>{t.slabValue}</Td>
-                <Td>{t.rateValue}</Td>
+                <Td small>₹ {currency(product.pricing.setup)}</Td>
+                <Td small>₹ {currency(product.pricing.monthly)}</Td>
+                <Td small>₹ {currency(product.pricing.price)}</Td>
+                <Td small>{product.pricing.gst}%</Td>
+                <Td small highlight>
+                  ₹{" "}
+                  {product.pricing.total && Number(product.pricing.total) > 0
+                    ? currency(product.pricing.total)
+                    : currency(String(total))}
+                </Td>
               </tr>
             </tbody>
           </table>
-        ))}
+        </div>
 
-        <table className="w-full" style={{ borderCollapse: "collapse", fontSize: "3.3mm" }}>
-          <thead>
-            <tr>
-              <Th small>Setup Charges</Th>
-              <Th small>Monthly Charges</Th>
-              <Th small>Price</Th>
-              <Th small>GST (%)</Th>
-              <Th small>Final Total</Th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <Td small>₹ {currency(product.pricing.setup)}</Td>
-              <Td small>₹ {currency(product.pricing.monthly)}</Td>
-              <Td small>₹ {currency(product.pricing.price)}</Td>
-              <Td small>{product.pricing.gst}%</Td>
-              <Td small highlight>
-                ₹{" "}
-                {product.pricing.total && Number(product.pricing.total) > 0
-                  ? currency(product.pricing.total)
-                  : currency(String(total))}
-              </Td>
-            </tr>
-          </tbody>
-        </table>
+        <ul
+          {...bulletFx}
+          style={{
+            marginLeft: "4mm",
+            marginTop: "8mm",
+            overflow: "hidden",
+            fontSize: "3.35mm",
+            color: "#33405a",
+            flex: 1,
+            minHeight: 0,
+          }}
+        >
+          {product.bullets.slice(0, 13).map((b, i) => (
+            <li key={i} className="flex gap-[3.5mm]" style={{ marginBottom: "3.2mm" }}>
+              <span
+                style={{
+                  width: "2.2mm",
+                  height: "2.2mm",
+                  borderRadius: 99,
+                  background: NAVY,
+                  marginTop: "1.8mm",
+                  flexShrink: 0,
+                }}
+              />
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-
-      <ul
-        {...bulletFx}
-        style={{
-          left: "24mm",
-          right: "20mm",
-          top: "168mm",
-          bottom: "22mm",
-          overflow: "hidden",
-          fontSize: "3.35mm",
-          color: "#33405a",
-        }}
-      >
-        {product.bullets.slice(0, 13).map((b, i) => (
-          <li key={i} className="flex gap-[3.5mm]" style={{ marginBottom: "3.2mm" }}>
-            <span
-              style={{
-                width: "2.2mm",
-                height: "2.2mm",
-                borderRadius: 99,
-                background: NAVY,
-                marginTop: "1.8mm",
-                flexShrink: 0,
-              }}
-            />
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
 
       <PageFooter />
     </section>
