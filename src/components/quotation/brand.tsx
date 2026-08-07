@@ -1,6 +1,7 @@
 /** Shared brand primitives that reproduce the Immense Smart Solution proposal template. */
 
 import logoAsset from "@/assets/immense-air-logo.png.asset.json";
+import { AutoFit } from "./AutoFit";
 
 export const NAVY = "#0f2a5f";
 export const ORANGE = "#f2591f";
@@ -230,7 +231,7 @@ export function RibbonTitle({ children }: { children: React.ReactNode }) {
     <div className="flex items-center justify-center gap-[3mm]">
       <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
       <span style={{ width: "14mm", height: "1mm", background: ORANGE }} />
-      <div className="relative" style={{ background: ORANGE, maxWidth: "150mm" }}>
+      <div className="relative" style={{ background: ORANGE }}>
         <div style={{ padding: "3mm 12mm" }}>
           <AutoFit
             size={7.4}
@@ -238,7 +239,7 @@ export function RibbonTitle({ children }: { children: React.ReactNode }) {
             lineHeight={1.1}
             align="center"
             className="font-display font-extrabold"
-            style={{ color: "#fff" }}
+            style={{ color: "#fff", width: "auto", maxWidth: "126mm" }}
           >
             {children}
           </AutoFit>
