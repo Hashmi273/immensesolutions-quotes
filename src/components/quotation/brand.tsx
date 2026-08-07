@@ -230,12 +230,18 @@ export function RibbonTitle({ children }: { children: React.ReactNode }) {
     <div className="flex items-center justify-center gap-[3mm]">
       <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
       <span style={{ width: "14mm", height: "1mm", background: ORANGE }} />
-      <div className="relative" style={{ background: ORANGE }}>
-        <div
-          className="font-display font-extrabold text-center"
-          style={{ color: "#fff", fontSize: "7.4mm", padding: "3mm 12mm", lineHeight: 1.1 }}
-        >
-          {children}
+      <div className="relative" style={{ background: ORANGE, maxWidth: "150mm" }}>
+        <div style={{ padding: "3mm 12mm" }}>
+          <AutoFit
+            size={7.4}
+            maxLines={2}
+            lineHeight={1.1}
+            align="center"
+            className="font-display font-extrabold"
+            style={{ color: "#fff" }}
+          >
+            {children}
+          </AutoFit>
         </div>
         <span
           className="absolute"
