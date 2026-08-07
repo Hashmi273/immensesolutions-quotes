@@ -199,7 +199,7 @@ export function QuotationBuilder() {
       setOpenKey(section);
     }
     const target =
-      editorRefs.current[section === "contact" ? "manager" : section] ?? editorRefs.current.client;
+      editorRefs.current[section === "contact" ? "manager" : section] ?? editorRefs.current["client"];
     target?.scrollIntoView({ behavior: "smooth", block: "center" });
     setTimeout(() => setActiveSection(null), 2000);
   }, []);

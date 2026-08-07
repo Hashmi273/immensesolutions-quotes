@@ -237,3 +237,48 @@
   }
 }
 
+
+/* ---- editor <-> preview focus affordances ---- */
+.focus-target {
+  cursor: pointer;
+  border-radius: 1.5mm;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
+}
+.focus-glow {
+  animation: focus-glow 2s ease-out;
+}
+@keyframes focus-glow {
+  0%,
+  70% {
+    box-shadow: 0 0 0 1.2mm rgba(242, 103, 34, 0.45);
+    background-color: rgba(242, 103, 34, 0.09);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(242, 103, 34, 0);
+    background-color: transparent;
+  }
+}
+
+.preview-scroller {
+  scroll-behavior: smooth;
+}
+
+@media print {
+  .preview-scroller {
+    height: auto !important;
+    overflow: visible !important;
+    background: none !important;
+    border-radius: 0 !important;
+  }
+  .page-scaler {
+    zoom: 1 !important;
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+  .focus-target,
+  .focus-glow {
+    animation: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+}
