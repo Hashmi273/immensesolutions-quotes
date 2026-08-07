@@ -10,6 +10,8 @@ import {
   RibbonTitle,
 } from "./brand";
 import { computeTotal, currency, type Product, type Quotation } from "@/lib/quotation";
+import { AutoFit } from "./AutoFit";
+import { useFocusProps } from "./preview-focus";
 
 export function QuotationDocument({ data }: { data: Quotation }) {
   const active = data.products.filter((p) => p.enabled);
@@ -28,8 +30,10 @@ export function QuotationDocument({ data }: { data: Quotation }) {
 
 function CoverPage({ data }: { data: Quotation }) {
   const services = ["SMS", "WhatsApp", "Meta Verified", "IVR & OBD", "API"];
+  const proposalFx = useFocusProps("client:proposal");
+  const dateFx = useFocusProps("client:date");
   return (
-    <section className="a4-page shadow-page">
+    <section id="page-cover" data-page="cover" className="a4-page shadow-page">
       {/* top-right navy wave */}
       <svg
         className="absolute right-0 top-0"
@@ -128,12 +132,18 @@ function CoverPage({ data }: { data: Quotation }) {
         }}
       >
         <PartyBlock
+          focusId="client:name"
           label="Prepared For"
           value={data.client.clientName || "—"}
           bg={ORANGE}
         />
         <span style={{ width: "0.3mm", background: "#d9dee9", margin: "0 5mm" }} />
-        <PartyBlock label="Our Valued Partner" value={data.client.companyName || "—"} bg={NAVY} />
+        <PartyBlock
+          focusId="client:company"
+          label="Our Valued Partner"
+          value={data.client.companyName || "—"}
+          bg={NAVY}
+        />
       </div>
 
       {/* meta strip */}
@@ -149,11 +159,11 @@ function CoverPage({ data }: { data: Quotation }) {
           color: NAVY,
         }}
       >
-        <span>
+        <span {...proposalFx} style={{ maxWidth: "60mm", overflow: "hidden" }}>
           <span style={{ color: "#7b8699" }}>Proposal No: </span>
           <strong>{data.client.proposalNumber || "—"}</strong>
         </span>
-        <span>
+        <span {...dateFx}>
           <span style={{ color: "#7b8699" }}>Date: </span>
           <strong>{data.client.date || "—"}</strong>
         </span>
@@ -225,20 +235,36 @@ function CoverPage({ data }: { data: Quotation }) {
   );
 }
 
-function PartyBlock({ label, value, bg }: { label: string; value: string; bg: string }) {
+function PartyBlock({
+  label,
+  value,
+  bg,
+  focusId,
+}: {
+  label: string;
+  value: string;
+  bg: string;
+  focusId: string;
+}) {
+  const fx = useFocusProps(focusId, "flex flex-1 items-center gap-[3.5mm] min-w-0");
   return (
-    <div className="flex flex-1 items-center gap-[3.5mm]">
+    <div {...fx}>
       <span
         className="flex items-center justify-center rounded-full"
-        style={{ width: "13mm", height: "13mm", background: bg }}
+        style={{ width: "13mm", height: "13mm", background: bg, flexShrink: 0 }}
       >
         <Glyph name="user" size={7} />
       </span>
-      <div>
+      <div className="min-w-0 flex-1">
         <div style={{ fontSize: "3mm", color: "#6c7789" }}>{label}</div>
-        <div className="font-display font-extrabold" style={{ fontSize: "6mm", color: ORANGE }}>
+        <AutoFit
+          size={6}
+          maxLines={2}
+          className="font-display font-extrabold"
+          style={{ color: ORANGE }}
+        >
           {value}
-        </div>
+        </AutoFit>
       </div>
     </div>
   );
