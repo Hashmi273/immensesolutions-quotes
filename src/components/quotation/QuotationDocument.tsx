@@ -230,7 +230,7 @@ function CoverPage({ data }: { data: Quotation }) {
         </div>
       </div>
 
-      <PageFooter site="www.immenseair.com" email="info@immenseair.com" />
+      <PageFooter site="www.immenseair.in" email="info@immenseair.in" />
     </section>
   );
 }
@@ -470,12 +470,10 @@ function Td({
 
 function ContactPage({ data }: { data: Quotation }) {
   const bank: Array<[string, string, "user" | "bank" | "pin" | "card" | "doc"]> = [
-    ["Acc Name", "Immense Smart Solutions", "user"],
-    ["Bank name", "HDFC Bank", "bank"],
-    ["Branch Name", "Link Road Malad (W)", "pin"],
-    ["Account Number", "50200048687714", "card"],
-    ["Account Type", "Current", "doc"],
-    ["IFSC Code", "HDFC0000411", "doc"],
+    ["Acc Name", "Immense Air Private Limited", "user"],
+    ["Bank name", "ICICI Bank", "bank"],
+    ["Account Number", "777705101366", "card"],
+    ["IFSC Code", "ICIC0001218", "doc"],
   ];
   const mgrFx = useFocusProps("manager:card", "absolute flex gap-[6mm]");
   const footFx = useFocusProps("contact:footer", "absolute text-center");
@@ -638,7 +636,7 @@ function ContactPage({ data }: { data: Quotation }) {
         style={{ left: "24mm", right: "24mm", top: "246mm", fontSize: "3.2mm", color: "#33405a" }}
       >
         24/7 Support Center: Call us on +91 8898648592 | +91 8097018757: Or Mail us on
-        support@immenseair.com
+        support@immenseair.in
         <div className="font-semibold italic" style={{ color: NAVY, marginTop: "2.5mm" }}>
           &ldquo;Any Changes in rules and Regulations by Company, TRAI or Operator will be Applicable
           with effect from the date communicated&rdquo;
@@ -651,8 +649,8 @@ function ContactPage({ data }: { data: Quotation }) {
       >
         <div>
           02240136508 &nbsp;|&nbsp;{" "}
-          <span style={{ color: "#1857c8" }}>info@immenseair.com</span> &nbsp;|&nbsp;{" "}
-          <span style={{ color: "#1857c8" }}>www.immenseair.com</span>
+          <span style={{ color: "#1857c8" }}>info@immenseair.in</span> &nbsp;|&nbsp;{" "}
+          <span style={{ color: "#1857c8" }}>www.immenseair.in</span>
         </div>
         <div>9 Business Bay, Office 404, Off Link Road, Malad West, Mumbai, 400064</div>
       </div>
