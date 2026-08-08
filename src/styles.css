@@ -221,6 +221,11 @@
     margin: 0 !important;
     background: #ffffff !important;
   }
+  .print-area-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
   #print-root .page-scaler {
     transform: none !important;
     width: auto !important;
