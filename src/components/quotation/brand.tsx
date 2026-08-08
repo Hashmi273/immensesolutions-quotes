@@ -119,37 +119,51 @@ export function PageFooter({
   email?: string;
   phone?: string;
 }) {
+  const telHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
+  const siteHref = `https://${site.replace(/^https?:\/\//, "")}`;
   return (
-    <div className="absolute inset-x-0 bottom-0" aria-hidden={false}>
+    <div className="absolute inset-x-0" style={{ bottom: "1.5mm" }} aria-hidden={false}>
       <svg viewBox="0 0 794 70" className="block w-full" style={{ height: "18mm" }}>
         <path d="M0 34C160 4 300 60 470 34s230-34 324-14v50H0V34Z" fill={ORANGE} />
         <path d="M0 44C160 14 300 70 470 44s230-34 324-14v40H0V44Z" fill={NAVY} />
       </svg>
       <div
         className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-[6mm]"
-        style={{ height: "12mm", color: "#fff", fontSize: "2.9mm" }}
+        style={{ height: "12mm", color: "#fff", fontSize: "3.3mm", fontWeight: 600 }}
       >
-        <FooterItem icon="globe" label={site} />
-        <span style={{ opacity: 0.4 }}>|</span>
-        <FooterItem icon="mail" label={email} />
-        <span style={{ opacity: 0.4 }}>|</span>
-        <FooterItem icon="phone" label={phone} />
+        <FooterItem icon="globe" label={site} href={siteHref} />
+        <span style={{ opacity: 0.45 }}>|</span>
+        <FooterItem icon="mail" label={email} href={`mailto:${email}`} />
+        <span style={{ opacity: 0.45 }}>|</span>
+        <FooterItem icon="phone" label={phone} href={telHref} />
       </div>
     </div>
   );
 }
 
-function FooterItem({ icon, label }: { icon: "globe" | "mail" | "phone"; label: string }) {
+function FooterItem({
+  icon,
+  label,
+  href,
+}: {
+  icon: "globe" | "mail" | "phone";
+  label: string;
+  href: string;
+}) {
   return (
-    <span className="flex items-center gap-[2mm]">
+    <a
+      href={href}
+      className="flex items-center gap-[2.2mm]"
+      style={{ color: "#fff", textDecoration: "none" }}
+    >
       <span
         className="flex items-center justify-center rounded-full"
-        style={{ width: "5.2mm", height: "5.2mm", background: "#fff" }}
+        style={{ width: "5.6mm", height: "5.6mm", background: "#fff", flexShrink: 0 }}
       >
-        <Glyph name={icon} color={NAVY} size={3.1} />
+        <Glyph name={icon} color={NAVY} size={3.3} />
       </span>
-      {label}
-    </span>
+      <span style={{ letterSpacing: "0.01em" }}>{label}</span>
+    </a>
   );
 }
 
