@@ -14,7 +14,7 @@ export function LogoMark({ size = 46 }: { size?: number }) {
   const height = size * LOGO_ASPECT;
   return (
     <img
-      src="/brand/immense-air-icon.png"
+      src="/immense-air-icon.png"
       alt="Immense Air Pvt Ltd logo"
       width={width}
       height={height}
