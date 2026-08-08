@@ -273,7 +273,7 @@ export function QuotationBuilder() {
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-[1600px] items-start gap-6 px-5 py-6 lg:grid-cols-[440px_minmax(0,1fr)]">
+      <div className="print-area-wrapper mx-auto grid max-w-[1600px] items-start gap-6 px-5 py-6 lg:grid-cols-[440px_minmax(0,1fr)]">
         {/* -------- Editor -------- */}
         <div className="no-print space-y-4">
           <Card
