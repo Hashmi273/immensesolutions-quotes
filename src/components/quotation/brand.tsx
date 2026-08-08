@@ -1,19 +1,24 @@
 /** Shared brand primitives that reproduce the Immense Smart Solution proposal template. */
 
-import logoAsset from "@/assets/immense-air-logo.png.asset.json";
 import { AutoFit } from "./AutoFit";
 
 export const NAVY = "#0f2a5f";
 export const ORANGE = "#f2591f";
 
+// Real static asset served from /public — portable across any host (Netlify, Cloudflare, etc.),
+// unlike Lovable's internal "/__l5e/assets-v1/..." pointer which only resolves on Lovable's own domain.
+const LOGO_ASPECT = 754 / 574; // actual icon height / width, keeps the mark from looking stretched
+
 export function LogoMark({ size = 46 }: { size?: number }) {
+  const width = size;
+  const height = size * LOGO_ASPECT;
   return (
     <img
-      src={logoAsset.url}
+      src="/brand/immense-air-icon.png"
       alt="Immense Air Pvt Ltd logo"
-      width={size}
-      height={size * 1.05}
-      style={{ width: size, height: size * 1.05, objectFit: "contain" }}
+      width={width}
+      height={height}
+      style={{ width, height, objectFit: "contain", display: "block" }}
     />
   );
 }
@@ -106,8 +111,8 @@ export function CornerBlob() {
 
 /** Navy footer bar with the orange wave, used on every page. */
 export function PageFooter({
-  site = "www.immenseair.com",
-  email = "info@immenseair.com",
+  site = "www.immenseair.in",
+  email = "info@immenseair.in",
   phone = "+91 2245 00 3131",
 }: {
   site?: string;
