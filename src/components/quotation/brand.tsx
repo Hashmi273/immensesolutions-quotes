@@ -123,13 +123,13 @@ export function PageFooter({
   const siteHref = `https://${site.replace(/^https?:\/\//, "")}`;
   return (
     <div className="absolute inset-x-0" style={{ bottom: "1.5mm" }} aria-hidden={false}>
-      <svg viewBox="0 0 794 70" className="block w-full" style={{ height: "18mm" }}>
+      <svg viewBox="0 0 794 70" className="block w-full" style={{ height: "20mm" }}>
         <path d="M0 34C160 4 300 60 470 34s230-34 324-14v50H0V34Z" fill={ORANGE} />
         <path d="M0 44C160 14 300 70 470 44s230-34 324-14v40H0V44Z" fill={NAVY} />
       </svg>
       <div
         className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-[6mm]"
-        style={{ height: "12mm", color: "#fff", fontSize: "3.3mm", fontWeight: 600 }}
+        style={{ height: "13mm", color: "#fff", fontSize: "3.3mm", fontWeight: 600 }}
       >
         <FooterItem icon="globe" label={site} href={siteHref} />
         <span style={{ opacity: 0.45 }}>|</span>
