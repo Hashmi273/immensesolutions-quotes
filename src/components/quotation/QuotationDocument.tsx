@@ -214,7 +214,7 @@ function CoverPage({ data }: { data: Quotation }) {
             width: "84mm",
             background: NAVY,
             borderRadius: "0 2mm 2mm 0",
-            padding: "5mm 6mm",
+            padding: "3.5mm 6mm",
           }}
         >
           <div className="font-semibold" style={{ color: "#fff", fontSize: "4.4mm" }}>
@@ -223,7 +223,7 @@ function CoverPage({ data }: { data: Quotation }) {
           <div className="font-bold" style={{ color: ORANGE, fontSize: "4.6mm" }}>
             Stronger Results.
           </div>
-          <div style={{ height: "0.5mm", background: ORANGE, margin: "2.5mm 0" }} />
+          <div style={{ height: "0.5mm", background: ORANGE, margin: "1.5mm 0" }} />
           <div style={{ color: "#fff", fontSize: "2.8mm" }}>
             Powerful Solutions. Better Connections.
           </div>
@@ -338,7 +338,7 @@ function ProductPage({ product }: { product: Product }) {
 
       <div
         className="absolute flex flex-col"
-        style={{ left: "20mm", right: "20mm", top: "108mm", bottom: "22mm", overflow: "hidden" }}
+        style={{ left: "20mm", right: "20mm", top: "108mm", bottom: "24mm", overflow: "hidden" }}
       >
         <div {...priceFx} style={{ marginLeft: "4mm", marginRight: "4mm", flexShrink: 0 }}>
           {product.tables.map((t, i) => (
@@ -633,7 +633,7 @@ function ContactPage({ data }: { data: Quotation }) {
 
       <div
         className="absolute text-center"
-        style={{ left: "24mm", right: "24mm", top: "246mm", fontSize: "3.2mm", color: "#33405a" }}
+        style={{ left: "24mm", right: "24mm", top: "242mm", fontSize: "3.2mm", color: "#33405a" }}
       >
         24/7 Support Center: Call us on +91 8898648592 | +91 8097018757: Or Mail us on
         support@immenseair.in
@@ -645,7 +645,7 @@ function ContactPage({ data }: { data: Quotation }) {
 
       <div
         {...footFx}
-        style={{ left: "20mm", right: "20mm", top: "266mm", fontSize: "3mm", color: "#33405a", lineHeight: 1.6 }}
+        style={{ left: "20mm", right: "20mm", top: "265.5mm", fontSize: "3mm", color: "#33405a", lineHeight: 1.4 }}
       >
         <div>
           02240136508 &nbsp;|&nbsp;{" "}
