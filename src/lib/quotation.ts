@@ -2,6 +2,7 @@ export type ProductKey =
   | "bulkSms"
   | "rcs"
   | "whatsapp"
+  | "cpaas"
   | "obd"
   | "ivr"
   | "smpp";
@@ -68,6 +69,7 @@ export const PRODUCT_LABELS: Record<ProductKey, string> = {
   bulkSms: "Bulk SMS",
   rcs: "RCS Business Messaging",
   whatsapp: "WhatsApp Business API",
+  cpaas: "CPaaS Omni Communication",
   obd: "OBD Voice Calls",
   ivr: "IVR Solutions",
   smpp: "SMPP Connectivity",
@@ -180,6 +182,53 @@ export const defaultQuotation = (): Quotation => ({
         "Transparent & Hassle-Free Pricing.",
       ],
       pricing: emptyPricing(),
+    },
+    {
+      key: "cpaas",
+      enabled: true,
+      title: "CPaaS Omni Communication Panel",
+      badge: "CPaaS",
+      subTitle: "Omni Messaging",
+      intro:
+        "Immense Smart Solution offers a unified CPaaS platform to manage SMS, RCS, WhatsApp and more from a single dashboard. Our intelligent failover ensures your message is delivered through the best available channel, giving you higher reach and better results.",
+      tables: [
+        {
+          slabLabel: "Particulars",
+          slabValue: "Successful Delivery – Any Channel (SMS / RCS / WhatsApp)",
+          rateLabel: "Average Rate",
+          rateValue: "₹ 0.20 / Message",
+        },
+        {
+          slabLabel: "Particulars",
+          slabValue: "Platform Setup Charges",
+          rateLabel: "Average Rate",
+          rateValue: "₹ 0",
+        },
+        {
+          slabLabel: "Particulars",
+          slabValue: "Monthly Platform Charges",
+          rateLabel: "Average Rate",
+          rateValue: "₹ 0*",
+        },
+        {
+          slabLabel: "Particulars",
+          slabValue: "GST (%)",
+          rateLabel: "Average Rate",
+          rateValue: "18%",
+        },
+      ],
+      bullets: [
+        "Automatic failover from SMS → RCS → WhatsApp.",
+        "You pay only for the final successfully delivered message.",
+        "One customer = One count, irrespective of the channel used.",
+        "Single dashboard to manage all communication channels.",
+        "Real-time delivery reports and analytics.",
+        "API & SMPP integration support.",
+        "Template management and campaign scheduling.",
+        "Secure and reliable platform.",
+        "Technical assistance is available during the integration process.",
+      ],
+      pricing: emptyPricing("0", "0"),
     },
     {
       key: "obd",

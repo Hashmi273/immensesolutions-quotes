@@ -248,17 +248,17 @@ export function Glyph({
 export function RibbonTitle({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center justify-center gap-[3mm]">
-      <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
-      <span style={{ width: "14mm", height: "1mm", background: ORANGE }} />
-      <div className="relative" style={{ background: ORANGE }}>
-        <div style={{ padding: "3mm 12mm" }}>
+      <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE, flexShrink: 0 }} />
+      <span style={{ width: "14mm", height: "1mm", background: ORANGE, flexShrink: 0 }} />
+      <div className="relative" style={{ background: ORANGE, maxWidth: "155mm" }}>
+        <div style={{ padding: "2.6mm 10mm" }}>
           <AutoFit
-            size={7.4}
-            maxLines={2}
+            size={6.6}
+            maxLines={1}
             lineHeight={1.1}
             align="center"
-            className="font-display font-extrabold"
-            style={{ color: "#fff", width: "auto", maxWidth: "126mm" }}
+            className="font-display font-extrabold whitespace-nowrap"
+            style={{ color: "#fff", width: "auto" }}
           >
             {children}
           </AutoFit>
@@ -286,8 +286,8 @@ export function RibbonTitle({ children }: { children: React.ReactNode }) {
           }}
         />
       </div>
-      <span style={{ width: "14mm", height: "1mm", background: ORANGE }} />
-      <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE }} />
+      <span style={{ width: "14mm", height: "1mm", background: ORANGE, flexShrink: 0 }} />
+      <span style={{ width: "3mm", height: "3mm", borderRadius: 99, background: ORANGE, flexShrink: 0 }} />
     </div>
   );
 }

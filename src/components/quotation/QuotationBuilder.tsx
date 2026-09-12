@@ -370,82 +370,192 @@ export function QuotationBuilder() {
                             onFocusPreview={() => focusPreview(`${p.key}:title`)}
                             onChange={(v) => patchProduct(p.key, { title: v })}
                           />
-                          <Field
-                            label="Section Heading"
-                            value={p.subTitle}
-                            onFocusPreview={() => focusPreview(`${p.key}:sub`)}
-                            onChange={(v) => patchProduct(p.key, { subTitle: v })}
-                          />
-                          {p.tables.map((t, i) => (
-                            <div key={i} className="grid grid-cols-2 gap-3">
-                              <Field
-                                label={`${t.slabLabel} · Slab`}
-                                value={t.slabValue}
-                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                onChange={(v) =>
-                                  patchProduct(p.key, {
-                                    tables: p.tables.map((x, j) =>
-                                      j === i ? { ...x, slabValue: v } : x,
-                                    ),
-                                  })
-                                }
-                              />
-                              <Field
-                                label={`${t.rateLabel}`}
-                                value={t.rateValue}
-                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                onChange={(v) =>
-                                  patchProduct(p.key, {
-                                    tables: p.tables.map((x, j) =>
-                                      j === i ? { ...x, rateValue: v } : x,
-                                    ),
-                                  })
-                                }
-                              />
-                            </div>
-                          ))}
-
-                          <div className="rounded-lg bg-white p-3">
-                            <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
-                              Pricing
-                            </p>
-                            <div className="grid grid-cols-2 gap-3">
-                              {(
-                                [
-                                  ["setup", "Setup Charges"],
-                                  ["monthly", "Monthly Charges"],
-                                  ["price", "Price"],
-                                  ["gst", "GST (%)"],
-                                ] as const
-                              ).map(([k, label]) => (
-                                <Field
-                                  key={k}
-                                  label={label}
-                                  value={p.pricing[k]}
-                                  onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                  onChange={(v) =>
-                                    patchProduct(p.key, { pricing: { ...p.pricing, [k]: v } })
-                                  }
-                                />
-                              ))}
-                            </div>
-                            <div className="mt-3">
-                              <Field
-                                label="Final Total (leave 0 to auto-calculate)"
-                                value={p.pricing.total}
-                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                onChange={(v) =>
-                                  patchProduct(p.key, { pricing: { ...p.pricing, total: v } })
-                                }
-                              />
-                              <p className="mt-1.5 text-xs text-brand-ink/60">
-                                Auto total: ₹{" "}
-                                {computeTotal(p.pricing).toLocaleString("en-IN", {
-                                  maximumFractionDigits: 2,
-                                })}
-                              </p>
-                            </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            <Field
+                              label="Badge Icon Label"
+                              value={p.badge}
+                              onFocusPreview={() => focusPreview(`${p.key}:sub`)}
+                              onChange={(v) => patchProduct(p.key, { badge: v })}
+                            />
+                            <Field
+                              label="Section Heading"
+                              value={p.subTitle}
+                              onFocusPreview={() => focusPreview(`${p.key}:sub`)}
+                              onChange={(v) => patchProduct(p.key, { subTitle: v })}
+                            />
                           </div>
+                          <label className="block">
+                            <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
+                              Intro Description
+                            </span>
+                            <textarea
+                              rows={3}
+                              value={p.intro}
+                              onFocus={() => focusPreview(`${p.key}:intro`)}
+                              onChange={(e) => {
+                                patchProduct(p.key, { intro: e.target.value });
+                                focusPreview(`${p.key}:intro`);
+                              }}
+                              className="w-full rounded-lg border border-brand-line bg-white px-3 py-2 text-sm text-navy outline-none focus:border-navy focus:ring-4 focus:ring-navy/10"
+                            />
+                          </label>
+
+                          {p.key === "cpaas" ? (
+                            <div className="rounded-lg border border-brand-line/70 bg-white p-3 space-y-3">
+                              <div className="flex items-center justify-between">
+                                <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
+                                  Table Particulars & Rates
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    patchProduct(p.key, {
+                                      tables: [
+                                        ...p.tables,
+                                        {
+                                          slabLabel: p.tables[0]?.slabLabel || "Particulars",
+                                          slabValue: "Additional Service",
+                                          rateLabel: p.tables[0]?.rateLabel || "Average Rate",
+                                          rateValue: "₹ 0",
+                                        },
+                                      ],
+                                    })
+                                  }
+                                  className="inline-flex items-center gap-1 text-xs font-semibold text-navy hover:underline cursor-pointer"
+                                >
+                                  + Add Row
+                                </button>
+                              </div>
+                              <div className="grid grid-cols-[1fr_140px_auto] gap-2 text-[11px] font-semibold uppercase tracking-wider text-brand-ink/50 px-1">
+                                <span>Particulars</span>
+                                <span>Average Rate</span>
+                                <span className="w-7"></span>
+                              </div>
+                              <div className="space-y-2">
+                                {p.tables.map((t, i) => (
+                                  <div key={i} className="flex items-center gap-2">
+                                    <input
+                                      type="text"
+                                      placeholder="Particulars"
+                                      value={t.slabValue}
+                                      onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                      onChange={(e) =>
+                                        patchProduct(p.key, {
+                                          tables: p.tables.map((x, j) =>
+                                            j === i ? { ...x, slabValue: e.target.value } : x,
+                                          ),
+                                        })
+                                      }
+                                      className="min-w-0 flex-1 rounded-lg border border-brand-line bg-white px-3 py-2 text-sm text-navy outline-none focus:border-navy focus:ring-2 focus:ring-navy/10"
+                                    />
+                                    <input
+                                      type="text"
+                                      placeholder="Rate"
+                                      value={t.rateValue}
+                                      onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                      onChange={(e) =>
+                                        patchProduct(p.key, {
+                                          tables: p.tables.map((x, j) =>
+                                            j === i ? { ...x, rateValue: e.target.value } : x,
+                                          ),
+                                        })
+                                      }
+                                      className="w-[140px] shrink-0 rounded-lg border border-brand-line bg-white px-3 py-2 text-sm text-navy outline-none focus:border-navy focus:ring-2 focus:ring-navy/10"
+                                    />
+                                    {p.tables.length > 1 ? (
+                                      <button
+                                        type="button"
+                                        title="Remove row"
+                                        onClick={() =>
+                                          patchProduct(p.key, {
+                                            tables: p.tables.filter((_, j) => j !== i),
+                                          })
+                                        }
+                                        className="flex h-8 w-7 shrink-0 items-center justify-center rounded-lg border border-brand-line text-brand-ink/40 hover:border-red-300 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer text-xs"
+                                      >
+                                        ✕
+                                      </button>
+                                    ) : (
+                                      <div className="w-7 shrink-0" />
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              {p.tables.map((t, i) => (
+                                <div key={i} className="grid grid-cols-2 gap-3">
+                                  <Field
+                                    label={`${t.slabLabel} · Slab`}
+                                    value={t.slabValue}
+                                    onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                    onChange={(v) =>
+                                      patchProduct(p.key, {
+                                        tables: p.tables.map((x, j) =>
+                                          j === i ? { ...x, slabValue: v } : x,
+                                        ),
+                                      })
+                                    }
+                                  />
+                                  <Field
+                                    label={`${t.rateLabel}`}
+                                    value={t.rateValue}
+                                    onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                    onChange={(v) =>
+                                      patchProduct(p.key, {
+                                        tables: p.tables.map((x, j) =>
+                                          j === i ? { ...x, rateValue: v } : x,
+                                        ),
+                                      })
+                                    }
+                                  />
+                                </div>
+                              ))}
+
+                              <div className="rounded-lg bg-white p-3">
+                                <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
+                                  Pricing
+                                </p>
+                                <div className="grid grid-cols-2 gap-3">
+                                  {(
+                                    [
+                                      ["setup", "Setup Charges"],
+                                      ["monthly", "Monthly Charges"],
+                                      ["price", "Price"],
+                                      ["gst", "GST (%)"],
+                                    ] as const
+                                  ).map(([k, label]) => (
+                                    <Field
+                                      key={k}
+                                      label={label}
+                                      value={p.pricing[k]}
+                                      onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                      onChange={(v) =>
+                                        patchProduct(p.key, { pricing: { ...p.pricing, [k]: v } })
+                                      }
+                                    />
+                                  ))}
+                                </div>
+                                <div className="mt-3">
+                                  <Field
+                                    label="Final Total (leave 0 to auto-calculate)"
+                                    value={p.pricing.total}
+                                    onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                    onChange={(v) =>
+                                      patchProduct(p.key, { pricing: { ...p.pricing, total: v } })
+                                    }
+                                  />
+                                  <p className="mt-1.5 text-xs text-brand-ink/60">
+                                    Auto total: ₹{" "}
+                                    {computeTotal(p.pricing).toLocaleString("en-IN", {
+                                      maximumFractionDigits: 2,
+                                    })}
+                                  </p>
+                                </div>
+                              </div>
+                            </>
+                          )}
 
                           <label className="block">
                             <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">

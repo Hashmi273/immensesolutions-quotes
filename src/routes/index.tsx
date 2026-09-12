@@ -3,7 +3,7 @@ import { QuotationBuilder } from "@/components/quotation/QuotationBuilder";
 
 const title = "Quotation Manager — Immense Smart Solution";
 const description =
-  "Build, price and export professional A4 business proposals for Bulk SMS, RCS, WhatsApp API, OBD, IVR and SMPP in one click.";
+  "Build, price and export professional A4 business proposals for Bulk SMS, RCS, WhatsApp API, CPaaS, OBD, IVR and SMPP in one click.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

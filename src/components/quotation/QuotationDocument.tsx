@@ -277,7 +277,7 @@ function ProductPage({ product }: { product: Product }) {
   const k = product.key;
   const titleFx = useFocusProps(`${k}:title`, "absolute inset-x-0");
   const introFx = useFocusProps(`${k}:intro`, "absolute text-center leading-[1.8]");
-  const subFx = useFocusProps(`${k}:sub`, "absolute flex items-center gap-[4mm]");
+  const subFx = useFocusProps(`${k}:sub`, "absolute flex items-center justify-center");
   const priceFx = useFocusProps(`${k}:pricing`, "");
   const bulletFx = useFocusProps(`${k}:bullets`, "");
   return (
@@ -294,21 +294,28 @@ function ProductPage({ product }: { product: Product }) {
         color="#d6dbe6"
       />
 
-      <div {...titleFx} style={{ top: "42mm" }}>
+      <div {...titleFx} style={{ top: "39mm" }}>
         <RibbonTitle>{product.title}</RibbonTitle>
       </div>
 
       <p
         {...introFx}
-        style={{ left: "26mm", right: "26mm", top: "60mm", fontSize: "3.5mm", color: "#3c4a63" }}
+        style={{
+          left: "24mm",
+          right: "24mm",
+          top: "57mm",
+          fontSize: "3.4mm",
+          color: "#3c4a63",
+          lineHeight: 1.65,
+        }}
       >
         <strong style={{ color: NAVY }}>Immense Smart Solution</strong>{" "}
         {product.intro.replace(/^Immense Smart Solution\s*/, "")}
       </p>
 
-      <div {...subFx} style={{ left: "20mm", right: "20mm", top: "88mm" }}>
+      <div {...subFx} style={{ left: "20mm", right: "20mm", top: "85mm" }}>
         <span
-          className="flex items-center justify-center rounded-full font-bold"
+          className="absolute left-0 flex items-center justify-center rounded-full font-bold"
           style={{
             width: "17mm",
             height: "17mm",
@@ -319,81 +326,120 @@ function ProductPage({ product }: { product: Product }) {
         >
           {product.badge}
         </span>
-        <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
-        <span style={{ width: "2.6mm", height: "2.6mm", borderRadius: 99, background: ORANGE }} />
-        <span className="min-w-0 flex-shrink" style={{ maxWidth: "96mm" }}>
-          <AutoFit
-            size={6}
-            maxLines={2}
-            align="center"
-            className="font-display font-extrabold"
-            style={{ color: ORANGE }}
-          >
-            {product.subTitle}
-          </AutoFit>
-        </span>
-        <span style={{ width: "2.6mm", height: "2.6mm", borderRadius: 99, background: ORANGE }} />
-        <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
+        <div className="flex items-center justify-center gap-[3.5mm]">
+          <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
+          <span style={{ width: "2.6mm", height: "2.6mm", borderRadius: 99, background: ORANGE }} />
+          <span className="min-w-0" style={{ maxWidth: "110mm" }}>
+            <AutoFit
+              size={5.8}
+              maxLines={1}
+              align="center"
+              className="font-display font-extrabold whitespace-nowrap"
+              style={{ color: ORANGE }}
+            >
+              {product.subTitle}
+            </AutoFit>
+          </span>
+          <span style={{ width: "2.6mm", height: "2.6mm", borderRadius: 99, background: ORANGE }} />
+          <span style={{ width: "14mm", height: "0.8mm", background: ORANGE }} />
+        </div>
       </div>
 
       <div
         className="absolute flex flex-col"
-        style={{ left: "20mm", right: "20mm", top: "108mm", bottom: "24mm", overflow: "hidden" }}
+        style={{ left: "20mm", right: "20mm", top: "106mm", bottom: "24mm", overflow: "hidden" }}
       >
         <div {...priceFx} style={{ marginLeft: "4mm", marginRight: "4mm", flexShrink: 0 }}>
-          {product.tables.map((t, i) => (
+          {product.key === "cpaas" ? (
             <table
-              key={i}
               className="w-full"
-              style={{ borderCollapse: "collapse", marginBottom: "4mm", fontSize: "3.6mm" }}
+              style={{
+                borderCollapse: "collapse",
+                marginBottom: "4mm",
+                fontSize: "3.5mm",
+                border: `0.35mm solid ${NAVY}`,
+              }}
             >
               <thead>
                 <tr>
-                  <Th>{t.slabLabel}</Th>
-                  <Th>{t.rateLabel}</Th>
+                  <Th width="62%" align="center">
+                    {product.tables[0]?.slabLabel || "Particulars"}
+                  </Th>
+                  <Th width="38%" align="center">
+                    {product.tables[0]?.rateLabel || "Average Rate"}
+                  </Th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <Td>{t.slabValue}</Td>
-                  <Td>{t.rateValue}</Td>
-                </tr>
+                {product.tables.map((row, i) => (
+                  <tr key={i}>
+                    <Td align="left" style={{ paddingLeft: "5mm", fontWeight: 600 }}>
+                      {row.slabValue}
+                    </Td>
+                    <Td align="center" style={{ fontWeight: 700 }}>
+                      {row.rateValue}
+                    </Td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-          ))}
+          ) : (
+            <>
+              {product.tables.map((t, i) => (
+                <table
+                  key={i}
+                  className="w-full"
+                  style={{ borderCollapse: "collapse", marginBottom: "4mm", fontSize: "3.6mm" }}
+                >
+                  <thead>
+                    <tr>
+                      <Th>{t.slabLabel}</Th>
+                      <Th>{t.rateLabel}</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <Td>{t.slabValue}</Td>
+                      <Td>{t.rateValue}</Td>
+                    </tr>
+                  </tbody>
+                </table>
+              ))}
 
-          <table className="w-full" style={{ borderCollapse: "collapse", fontSize: "3.3mm" }}>
-            <thead>
-              <tr>
-                <Th small>Setup Charges</Th>
-                <Th small>Monthly Charges</Th>
-                <Th small>Price</Th>
-                <Th small>GST (%)</Th>
-                <Th small>Final Total</Th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <Td small>₹ {currency(product.pricing.setup)}</Td>
-                <Td small>₹ {currency(product.pricing.monthly)}</Td>
-                <Td small>₹ {currency(product.pricing.price)}</Td>
-                <Td small>{product.pricing.gst}%</Td>
-                <Td small highlight>
-                  ₹{" "}
-                  {product.pricing.total && Number(product.pricing.total) > 0
-                    ? currency(product.pricing.total)
-                    : currency(String(total))}
-                </Td>
-              </tr>
-            </tbody>
-          </table>
+              <table className="w-full" style={{ borderCollapse: "collapse", fontSize: "3.3mm" }}>
+                <thead>
+                  <tr>
+                    <Th small>Setup Charges</Th>
+                    <Th small>Monthly Charges</Th>
+                    <Th small>Price</Th>
+                    <Th small>GST (%)</Th>
+                    <Th small>Final Total</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <Td small>₹ {currency(product.pricing.setup)}</Td>
+                    <Td small>₹ {currency(product.pricing.monthly)}</Td>
+                    <Td small>₹ {currency(product.pricing.price)}</Td>
+                    <Td small>{product.pricing.gst}%</Td>
+                    <Td small highlight>
+                      ₹{" "}
+                      {product.pricing.total && Number(product.pricing.total) > 0
+                        ? currency(product.pricing.total)
+                        : currency(String(total))}
+                    </Td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          )}
         </div>
 
         <ul
           {...bulletFx}
           style={{
             marginLeft: "4mm",
-            marginTop: "8mm",
+            marginTop: product.key === "cpaas" ? "6mm" : "8mm",
             overflow: "hidden",
             fontSize: "3.35mm",
             color: "#33405a",
@@ -424,7 +470,17 @@ function ProductPage({ product }: { product: Product }) {
   );
 }
 
-function Th({ children, small }: { children: React.ReactNode; small?: boolean }) {
+function Th({
+  children,
+  small,
+  align = "center",
+  width,
+}: {
+  children: React.ReactNode;
+  small?: boolean;
+  align?: "left" | "center" | "right";
+  width?: string;
+}) {
   return (
     <th
       style={{
@@ -432,6 +488,8 @@ function Th({ children, small }: { children: React.ReactNode; small?: boolean })
         color: "#fff",
         padding: small ? "2.6mm" : "3.4mm",
         fontWeight: 600,
+        textAlign: align,
+        width,
         overflowWrap: "anywhere",
         border: "0.3mm solid #fff",
       }}
@@ -445,20 +503,25 @@ function Td({
   children,
   small,
   highlight,
+  align = "center",
+  style: customStyle,
 }: {
   children: React.ReactNode;
   small?: boolean;
   highlight?: boolean;
+  align?: "left" | "center" | "right";
+  style?: React.CSSProperties;
 }) {
   return (
     <td
       style={{
         padding: small ? "2.6mm" : "3.4mm",
-        textAlign: "center",
+        textAlign: align,
         fontWeight: 600,
         color: highlight ? ORANGE : NAVY,
         overflowWrap: "anywhere",
         border: "0.3mm solid #d7dce7",
+        ...customStyle,
       }}
     >
       {children}
