@@ -120,7 +120,7 @@ type ZoomMode = number | "fit-width" | "fit-page";
 
 export function QuotationBuilder() {
   const [data, setData] = useState<Quotation>(defaultQuotation);
-  const [openKey, setOpenKey] = useState<string | null>("bulkSms");
+  const [openKey, setOpenKey] = useState<string | null>("cpaas");
   const [highlight, setHighlight] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [zoom, setZoom] = useState<ZoomMode>("fit-width");
@@ -400,162 +400,276 @@ export function QuotationBuilder() {
                             />
                           </label>
 
-                          {p.key === "cpaas" ? (
-                            <div className="rounded-lg border border-brand-line/70 bg-white p-3 space-y-3">
-                              <div className="flex items-center justify-between">
-                                <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
-                                  Table Particulars & Rates
-                                </p>
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    patchProduct(p.key, {
-                                      tables: [
-                                        ...p.tables,
-                                        {
-                                          slabLabel: p.tables[0]?.slabLabel || "Particulars",
-                                          slabValue: "Additional Service",
-                                          rateLabel: p.tables[0]?.rateLabel || "Average Rate",
-                                          rateValue: "₹ 0",
-                                        },
-                                      ],
-                                    })
-                                  }
-                                  className="inline-flex items-center gap-1 text-xs font-semibold text-navy hover:underline cursor-pointer"
+                          <div className="rounded-lg border border-brand-line/70 bg-white p-3 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
+                                Table Blocks & Headers
+                              </p>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  patchProduct(p.key, {
+                                    tables: [
+                                      ...p.tables,
+                                      {
+                                        slabLabel: "Credit Slab",
+                                        slabValue: "Per WhatsApp",
+                                        rateLabel: "WhatsApp Rate",
+                                        rateValue: "0.00",
+                                      },
+                                    ],
+                                  })
+                                }
+                                className="inline-flex items-center gap-1 text-xs font-semibold text-navy hover:underline cursor-pointer"
+                              >
+                                + Add Table Block
+                              </button>
+                            </div>
+                            <div className="space-y-3">
+                              {p.tables.map((t, i) => (
+                                <div
+                                  key={i}
+                                  className="rounded-lg border border-brand-line/70 bg-brand-grey/40 p-3 space-y-2.5"
                                 >
-                                  + Add Row
-                                </button>
-                              </div>
-                              <div className="grid grid-cols-[1fr_140px_auto] gap-2 text-[11px] font-semibold uppercase tracking-wider text-brand-ink/50 px-1">
-                                <span>Particulars</span>
-                                <span>Average Rate</span>
-                                <span className="w-7"></span>
-                              </div>
-                              <div className="space-y-2">
-                                {p.tables.map((t, i) => (
-                                  <div key={i} className="flex items-center gap-2">
-                                    <input
-                                      type="text"
-                                      placeholder="Particulars"
-                                      value={t.slabValue}
-                                      onFocus={() => focusPreview(`${p.key}:pricing`)}
-                                      onChange={(e) =>
-                                        patchProduct(p.key, {
-                                          tables: p.tables.map((x, j) =>
-                                            j === i ? { ...x, slabValue: e.target.value } : x,
-                                          ),
-                                        })
-                                      }
-                                      className="min-w-0 flex-1 rounded-lg border border-brand-line bg-white px-3 py-2 text-sm text-navy outline-none focus:border-navy focus:ring-2 focus:ring-navy/10"
-                                    />
-                                    <input
-                                      type="text"
-                                      placeholder="Rate"
-                                      value={t.rateValue}
-                                      onFocus={() => focusPreview(`${p.key}:pricing`)}
-                                      onChange={(e) =>
-                                        patchProduct(p.key, {
-                                          tables: p.tables.map((x, j) =>
-                                            j === i ? { ...x, rateValue: e.target.value } : x,
-                                          ),
-                                        })
-                                      }
-                                      className="w-[140px] shrink-0 rounded-lg border border-brand-line bg-white px-3 py-2 text-sm text-navy outline-none focus:border-navy focus:ring-2 focus:ring-navy/10"
-                                    />
+                                  <div className="flex items-center justify-between border-b border-brand-line/50 pb-1.5">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-navy">
+                                      Table Block {i + 1}
+                                    </span>
                                     {p.tables.length > 1 ? (
                                       <button
                                         type="button"
-                                        title="Remove row"
+                                        title="Remove table block"
                                         onClick={() =>
                                           patchProduct(p.key, {
                                             tables: p.tables.filter((_, j) => j !== i),
                                           })
                                         }
-                                        className="flex h-8 w-7 shrink-0 items-center justify-center rounded-lg border border-brand-line text-brand-ink/40 hover:border-red-300 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer text-xs"
+                                        className="text-xs font-semibold text-red-600 hover:underline cursor-pointer"
                                       >
-                                        ✕
+                                        ✕ Remove Table
                                       </button>
-                                    ) : (
-                                      <div className="w-7 shrink-0" />
-                                    )}
+                                    ) : null}
                                   </div>
-                                ))}
-                              </div>
-                            </div>
-                          ) : (
-                            <>
-                              {p.tables.map((t, i) => (
-                                <div key={i} className="grid grid-cols-2 gap-3">
-                                  <Field
-                                    label={`${t.slabLabel} · Slab`}
-                                    value={t.slabValue}
-                                    onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                    onChange={(v) =>
-                                      patchProduct(p.key, {
-                                        tables: p.tables.map((x, j) =>
-                                          j === i ? { ...x, slabValue: v } : x,
-                                        ),
-                                      })
-                                    }
-                                  />
-                                  <Field
-                                    label={`${t.rateLabel}`}
-                                    value={t.rateValue}
-                                    onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                    onChange={(v) =>
-                                      patchProduct(p.key, {
-                                        tables: p.tables.map((x, j) =>
-                                          j === i ? { ...x, rateValue: v } : x,
-                                        ),
-                                      })
-                                    }
-                                  />
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div>
+                                      <span className="mb-1 block text-[10px] font-semibold uppercase text-brand-ink/60">
+                                        Left Header
+                                      </span>
+                                      <input
+                                        type="text"
+                                        placeholder="Header Label"
+                                        value={t.slabLabel}
+                                        onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                        onChange={(e) =>
+                                          patchProduct(p.key, {
+                                            tables: p.tables.map((x, j) =>
+                                              j === i ? { ...x, slabLabel: e.target.value } : x,
+                                            ),
+                                          })
+                                        }
+                                        className="w-full rounded-md border border-brand-line bg-white px-2.5 py-1.5 text-xs text-navy outline-none focus:border-navy"
+                                      />
+                                    </div>
+                                    <div>
+                                      <span className="mb-1 block text-[10px] font-semibold uppercase text-brand-ink/60">
+                                        Right Header
+                                      </span>
+                                      <input
+                                        type="text"
+                                        placeholder="Header Label"
+                                        value={t.rateLabel}
+                                        onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                        onChange={(e) =>
+                                          patchProduct(p.key, {
+                                            tables: p.tables.map((x, j) =>
+                                              j === i ? { ...x, rateLabel: e.target.value } : x,
+                                            ),
+                                          })
+                                        }
+                                        className="w-full rounded-md border border-brand-line bg-white px-2.5 py-1.5 text-xs text-navy outline-none focus:border-navy"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="grid grid-cols-2 gap-2 pt-0.5">
+                                    <div>
+                                      <span className="mb-1 block text-[10px] font-semibold uppercase text-brand-ink/60">
+                                        Left Value (Slab)
+                                      </span>
+                                      <input
+                                        type="text"
+                                        placeholder="Slab / Particulars"
+                                        value={t.slabValue}
+                                        onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                        onChange={(e) =>
+                                          patchProduct(p.key, {
+                                            tables: p.tables.map((x, j) =>
+                                              j === i ? { ...x, slabValue: e.target.value } : x,
+                                            ),
+                                          })
+                                        }
+                                        className="w-full rounded-md border border-brand-line bg-white px-2.5 py-1.5 text-xs font-medium text-navy outline-none focus:border-navy"
+                                      />
+                                    </div>
+                                    <div>
+                                      <span className="mb-1 block text-[10px] font-semibold uppercase text-brand-ink/60">
+                                        Right Value (Rate)
+                                      </span>
+                                      <input
+                                        type="text"
+                                        placeholder="Rate"
+                                        value={t.rateValue}
+                                        onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                        onChange={(e) =>
+                                          patchProduct(p.key, {
+                                            tables: p.tables.map((x, j) =>
+                                              j === i ? { ...x, rateValue: e.target.value } : x,
+                                            ),
+                                          })
+                                        }
+                                        className="w-full rounded-md border border-brand-line bg-white px-2.5 py-1.5 text-xs font-medium text-navy outline-none focus:border-navy"
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               ))}
+                            </div>
+                          </div>
 
-                              <div className="rounded-lg bg-white p-3">
-                                <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
-                                  Pricing
-                                </p>
-                                <div className="grid grid-cols-2 gap-3">
-                                  {(
-                                    [
-                                      ["setup", "Setup Charges"],
-                                      ["monthly", "Monthly Charges"],
-                                      ["price", "Price"],
-                                      ["gst", "GST (%)"],
-                                    ] as const
-                                  ).map(([k, label]) => (
-                                    <Field
-                                      key={k}
-                                      label={label}
-                                      value={p.pricing[k]}
-                                      onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                      onChange={(v) =>
-                                        patchProduct(p.key, { pricing: { ...p.pricing, [k]: v } })
-                                      }
-                                    />
-                                  ))}
-                                </div>
-                                <div className="mt-3">
-                                  <Field
-                                    label="Final Total (leave 0 to auto-calculate)"
-                                    value={p.pricing.total}
-                                    onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
-                                    onChange={(v) =>
-                                      patchProduct(p.key, { pricing: { ...p.pricing, total: v } })
-                                    }
-                                  />
-                                  <p className="mt-1.5 text-xs text-brand-ink/60">
-                                    Auto total: ₹{" "}
-                                    {computeTotal(p.pricing).toLocaleString("en-IN", {
-                                      maximumFractionDigits: 2,
-                                    })}
-                                  </p>
-                                </div>
+                          <div className="rounded-lg border border-brand-line/70 bg-white p-3 space-y-3">
+                            <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
+                              Total Agent Limit Section (Optional)
+                            </p>
+                            <div className="grid grid-cols-2 gap-2">
+                              <div>
+                                <span className="mb-1 block text-[10px] font-semibold uppercase text-brand-ink/60">
+                                  Header Title
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="Total Agent Limit"
+                                  value={p.agentLimitLabel ?? "Total Agent Limit"}
+                                  onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                  onChange={(e) =>
+                                    patchProduct(p.key, { agentLimitLabel: e.target.value })
+                                  }
+                                  className="w-full rounded-md border border-brand-line bg-white px-2.5 py-1.5 text-xs text-navy outline-none focus:border-navy"
+                                />
                               </div>
-                            </>
-                          )}
+                              <div>
+                                <span className="mb-1 block text-[10px] font-semibold uppercase text-brand-ink/60">
+                                  Limit Value
+                                </span>
+                                <input
+                                  type="text"
+                                  placeholder="e.g. Unlimited or 5 (Leave empty to hide)"
+                                  value={p.agentLimitValue ?? ""}
+                                  onFocus={() => focusPreview(`${p.key}:pricing`)}
+                                  onChange={(e) =>
+                                    patchProduct(p.key, { agentLimitValue: e.target.value })
+                                  }
+                                  className="w-full rounded-md border border-brand-line bg-white px-2.5 py-1.5 text-xs font-medium text-navy outline-none focus:border-navy"
+                                />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="rounded-lg bg-white p-3 space-y-3">
+                            <p className="text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">
+                              Summary Pricing Table & Header Labels (Optional)
+                            </p>
+                            <div className="grid grid-cols-2 gap-3">
+                              <Field
+                                label="Setup Header Title"
+                                value={p.pricing.setupLabel || "Setup Charges"}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, setupLabel: v } })
+                                }
+                              />
+                              <Field
+                                label="Setup Charges Value"
+                                value={p.pricing.setup}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, setup: v } })
+                                }
+                              />
+
+                              <Field
+                                label="Monthly Header Title"
+                                value={p.pricing.monthlyLabel || "Monthly Charges"}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, monthlyLabel: v } })
+                                }
+                              />
+                              <Field
+                                label="Monthly Charges Value"
+                                value={p.pricing.monthly}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, monthly: v } })
+                                }
+                              />
+
+                              <Field
+                                label="Price Header Title"
+                                value={p.pricing.priceLabel || "Price"}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, priceLabel: v } })
+                                }
+                              />
+                              <Field
+                                label="Price Value"
+                                value={p.pricing.price}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, price: v } })
+                                }
+                              />
+
+                              <Field
+                                label="GST Header Title"
+                                value={p.pricing.gstLabel || "GST (%)"}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, gstLabel: v } })
+                                }
+                              />
+                              <Field
+                                label="GST (%) Value"
+                                value={p.pricing.gst}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, gst: v } })
+                                }
+                              />
+
+                              <Field
+                                label="Total Header Title"
+                                value={p.pricing.totalLabel || "Final Total"}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, totalLabel: v } })
+                                }
+                              />
+                              <Field
+                                label="Final Total (0 = Auto)"
+                                value={p.pricing.total}
+                                onFocusPreview={() => focusPreview(`${p.key}:pricing`)}
+                                onChange={(v) =>
+                                  patchProduct(p.key, { pricing: { ...p.pricing, total: v } })
+                                }
+                              />
+                            </div>
+                            <p className="mt-1.5 text-xs text-brand-ink/60">
+                              Auto total: ₹{" "}
+                              {computeTotal(p.pricing).toLocaleString("en-IN", {
+                                maximumFractionDigits: 2,
+                              })}
+                            </p>
+                          </div>
 
                           <label className="block">
                             <span className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-brand-ink/60">

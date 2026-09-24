@@ -1,10 +1,13 @@
 export type ProductKey =
+  | "cpaas"
   | "bulkSms"
   | "rcs"
-  | "whatsapp"
-  | "cpaas"
+  | "metaWhatsapp"
+  | "virtualWhatsapp"
   | "obd"
   | "ivr"
+  | "mca"
+  | "email"
   | "smpp";
 
 export interface RateRow {
@@ -20,6 +23,11 @@ export interface Pricing {
   price: string;
   gst: string;
   total: string;
+  setupLabel?: string;
+  monthlyLabel?: string;
+  priceLabel?: string;
+  gstLabel?: string;
+  totalLabel?: string;
 }
 
 export interface Product {
@@ -33,6 +41,8 @@ export interface Product {
   subTitle: string;
   intro: string;
   tables: RateRow[];
+  agentLimitLabel?: string;
+  agentLimitValue?: string;
   bullets: string[];
   pricing: Pricing;
 }
@@ -57,22 +67,38 @@ export interface Quotation {
   manager: AccountManager;
 }
 
-const emptyPricing = (setup = "0", monthly = "0"): Pricing => ({
+const emptyPricing = (
+  setup = "0",
+  monthly = "0",
+  setupLabel = "Setup Charges",
+  monthlyLabel = "Monthly Charges",
+  priceLabel = "Price",
+  gstLabel = "GST (%)",
+  totalLabel = "Final Total",
+): Pricing => ({
   setup,
   monthly,
   price: "0",
   gst: "18",
   total: "0",
+  setupLabel,
+  monthlyLabel,
+  priceLabel,
+  gstLabel,
+  totalLabel,
 });
 
 export const PRODUCT_LABELS: Record<ProductKey, string> = {
-  bulkSms: "Bulk SMS",
-  rcs: "RCS Business Messaging",
-  whatsapp: "WhatsApp Business API",
   cpaas: "CPaaS Omni Communication",
-  obd: "OBD Voice Calls",
-  ivr: "IVR Solutions",
-  smpp: "SMPP Connectivity",
+  bulkSms: "SMS",
+  rcs: "RCS",
+  metaWhatsapp: "Meta WhatsApp",
+  virtualWhatsapp: "Virtual WhatsApp",
+  obd: "OBD",
+  ivr: "IVR",
+  mca: "MCA",
+  email: "Email",
+  smpp: "SMPP",
 };
 
 export const defaultQuotation = (): Quotation => ({
@@ -90,11 +116,58 @@ export const defaultQuotation = (): Quotation => ({
   },
   products: [
     {
+      key: "cpaas",
+      enabled: true,
+      title: "CPaaS Omni Communication Panel",
+      badge: "CPaaS",
+      subTitle: "Omni Messaging",
+      intro:
+        "Immense Smart Solution offers a unified CPaaS platform to manage SMS, RCS, WhatsApp, Voice and Email from a single dashboard. Our intelligent failover ensures your message is delivered through the best available channel, giving you higher reach and better results.",
+      tables: [
+        {
+          slabLabel: "Particulars",
+          slabValue: "Successful Delivery – Any Channel (SMS / RCS / WhatsApp)",
+          rateLabel: "Average Rate",
+          rateValue: "₹ 0.20 / Message",
+        },
+        {
+          slabLabel: "Particulars",
+          slabValue: "Platform Setup Charges",
+          rateLabel: "Average Rate",
+          rateValue: "₹ 0",
+        },
+        {
+          slabLabel: "Particulars",
+          slabValue: "Monthly Platform Charges",
+          rateLabel: "Average Rate",
+          rateValue: "₹ 0*",
+        },
+        {
+          slabLabel: "Particulars",
+          slabValue: "GST (%)",
+          rateLabel: "Average Rate",
+          rateValue: "18%",
+        },
+      ],
+      bullets: [
+        "Automatic failover from SMS → RCS → WhatsApp.",
+        "You pay only for the final successfully delivered message.",
+        "One customer = One count, irrespective of the channel used.",
+        "Single dashboard to manage all communication channels.",
+        "Real-time delivery reports and analytics.",
+        "API & SMPP integration support.",
+        "Template management and campaign scheduling.",
+        "Secure and reliable platform.",
+        "Technical assistance is available during the integration process.",
+      ],
+      pricing: emptyPricing("0", "0"),
+    },
+    {
       key: "bulkSms",
       enabled: true,
       title: "SMS Services & Pricing",
       badge: "SMS",
-      subTitle: "Promotional SMS",
+      subTitle: "Promotional & Transactional SMS",
       intro:
         "Immense Smart Solution offers competitive SMS services designed to meet your business communication needs. Our services are routed through reliable promotional routes, ensuring the swift and secure delivery of your messages.",
       tables: [
@@ -149,13 +222,13 @@ export const defaultQuotation = (): Quotation => ({
       pricing: emptyPricing(),
     },
     {
-      key: "whatsapp",
+      key: "metaWhatsapp",
       enabled: true,
-      title: "WhatsApp Services & Pricing",
-      badge: "WA",
-      subTitle: "Business WhatsApp (WABA)",
+      title: "Meta WhatsApp Services & Pricing",
+      badge: "WABA",
+      subTitle: "Official Meta WhatsApp Business API",
       intro:
-        "Immense Smart Solution offers professional WhatsApp Business API services to help businesses engage, communicate and grow. Our official WhatsApp API solution is reliable, secure and built to deliver better customer conversations at scale.",
+        "Immense Smart Solution offers official Meta WhatsApp Business API services to help businesses engage, communicate and grow. Our Meta WhatsApp solution is reliable, secure and built to deliver better customer conversations at scale.",
       tables: [
         {
           slabLabel: "Credit Slab (Marketing)",
@@ -184,51 +257,38 @@ export const defaultQuotation = (): Quotation => ({
       pricing: emptyPricing(),
     },
     {
-      key: "cpaas",
+      key: "virtualWhatsapp",
       enabled: true,
-      title: "CPaaS Omni Communication Panel",
-      badge: "CPaaS",
-      subTitle: "Omni Messaging",
+      title: "Virtual WhatsApp Services",
+      badge: "V-WA",
+      subTitle: "Promotional WhatsApp",
       intro:
-        "Immense Smart Solution offers a unified CPaaS platform to manage SMS, RCS, WhatsApp and more from a single dashboard. Our intelligent failover ensures your message is delivered through the best available channel, giving you higher reach and better results.",
+        "Immense Smart Solution offers Virtual WhatsApp services powered by the official WhatsApp Business API. Engage your customers with real conversations, rich media and automated messaging. Perfect for real estate and growing businesses.",
       tables: [
         {
-          slabLabel: "Particulars",
-          slabValue: "Successful Delivery – Any Channel (SMS / RCS / WhatsApp)",
-          rateLabel: "Average Rate",
-          rateValue: "₹ 0.20 / Message",
-        },
-        {
-          slabLabel: "Particulars",
-          slabValue: "Platform Setup Charges",
-          rateLabel: "Average Rate",
-          rateValue: "₹ 0",
-        },
-        {
-          slabLabel: "Particulars",
-          slabValue: "Monthly Platform Charges",
-          rateLabel: "Average Rate",
-          rateValue: "₹ 0*",
-        },
-        {
-          slabLabel: "Particulars",
-          slabValue: "GST (%)",
-          rateLabel: "Average Rate",
-          rateValue: "18%",
+          slabLabel: "Credit Slab (Utility)",
+          slabValue: "Per WhatsApp",
+          rateLabel: "WhatsApp Rate",
+          rateValue: "0.10 Paisa (OD Price)",
         },
       ],
       bullets: [
-        "Automatic failover from SMS → RCS → WhatsApp.",
-        "You pay only for the final successfully delivered message.",
-        "One customer = One count, irrespective of the channel used.",
-        "Single dashboard to manage all communication channels.",
-        "Real-time delivery reports and analytics.",
-        "API & SMPP integration support.",
-        "Template management and campaign scheduling.",
-        "Secure and reliable platform.",
-        "Technical assistance is available during the integration process.",
+        "Sender ID virtual Mobile number.",
+        "Image size: - No limit.",
+        "4 image & text Will Charged 1 Credits.",
+        "Real Estate Special Route.",
+        "Delivery: - Non-DND & DND Numbers.",
+        "WhatsApp Sending Time: - 10 AM to 7 PM.",
+        "No Documents Required for Service Activation.",
+        "Easy To use interface.",
+        "Virtual Sender ID: Use a virtual mobile number as sender ID.",
+        "Media Support: Send images without any size limit.",
+        "Credit Based: 4 image & text charged 1 Credit.",
+        "Wide Delivery: Supports both Non-DND & DND numbers.",
+        "Flexible Timing: Send WhatsApp messages from 10 AM to 7 PM.",
+        "Simple and easy to use platform.",
       ],
-      pricing: emptyPricing("0", "0"),
+      pricing: emptyPricing(),
     },
     {
       key: "obd",
@@ -261,10 +321,10 @@ export const defaultQuotation = (): Quotation => ({
     },
     {
       key: "ivr",
-      enabled: false,
+      enabled: true,
       title: "IVR Solutions & Pricing",
       badge: "IVR",
-      subTitle: "Cloud IVR",
+      subTitle: "Cloud IVR Solutions",
       intro:
         "Automate inbound customer journeys with a cloud IVR built for scale — multi-level menus, call routing, recording and real-time reporting on a virtual number of your choice.",
       tables: [
@@ -275,6 +335,8 @@ export const defaultQuotation = (): Quotation => ({
           rateValue: "0.30",
         },
       ],
+      agentLimitLabel: "Total Agent Limit",
+      agentLimitValue: "Unlimited",
       bullets: [
         "Multi-level IVR menu with smart call routing.",
         "Virtual number / toll-free number support.",
@@ -287,8 +349,65 @@ export const defaultQuotation = (): Quotation => ({
       pricing: emptyPricing("5000", "2000"),
     },
     {
+      key: "mca",
+      enabled: true,
+      title: "Missed Call Alert (MCA) Services",
+      badge: "MCA",
+      subTitle: "Missed Call Alert (MCA)",
+      intro:
+        "Immense Smart Solution offers Missed Call Alert (MCA) services to help you capture leads, run polls, and verify users automatically with zero cost to the caller. Our automated missed call solution ensures instant responses and real-time data integration for better customer engagement.",
+      tables: [
+        {
+          slabLabel: "Credit Slab (Utility)",
+          slabValue: "Per Missed Call",
+          rateLabel: "MCA Rate",
+          rateValue: "0.015 Paisa",
+        },
+      ],
+      bullets: [
+        "Instant Lead Capture: Auto-disconnect calls after 1-2 rings and trigger immediate SMS / WhatsApp response.",
+        "Real-time Webhook & API: Instant notification push to CRM upon receiving missed call.",
+        "Virtual Number Integration: Dedicated virtual landline or mobile numbers assigned for campaign tracking.",
+        "Unlimited Capacity: Concurrent call handling with detailed analytics and caller location reporting.",
+        "Easy Campaign Management: Create and manage missed call campaigns from a simple dashboard.",
+        "Real-time Reports: Detailed logs with date, time, mobile number and location data.",
+        "Wide Compatibility: Works across all telecom operators (Non-DND & DND numbers).",
+        "No Cost to Caller: Absolutely free for your customers.",
+        "Reliable & Scalable: High uptime engines to handle large volume campaigns.",
+        "24x7 Support: Technical assistance and campaign monitoring.",
+      ],
+      pricing: emptyPricing("0", "0"),
+    },
+    {
+      key: "email",
+      enabled: true,
+      title: "Enterprise Email Services",
+      badge: "EMAIL",
+      subTitle: "Transactional & Bulk Email",
+      intro:
+        "Immense Smart Solution offers high-deliverability enterprise email services for transactional alerts, invoices, notifications, and promotional marketing campaigns.",
+      tables: [
+        {
+          slabLabel: "Credit Slab",
+          slabValue: "Per Email",
+          rateLabel: "Email Rate",
+          rateValue: "0.05",
+        },
+      ],
+      bullets: [
+        "High inbox deliverability with IP reputation management.",
+        "Custom domain authentication (SPF, DKIM, DMARC).",
+        "SMTP & REST API integration support.",
+        "Real-time open, click, bounce, and unsubscribe tracking.",
+        "HTML template builder and responsive templates.",
+        "Dedicated or shared IP pool options.",
+        "24x7 Technical support and deliverability tuning.",
+      ],
+      pricing: emptyPricing("1000", "500"),
+    },
+    {
       key: "smpp",
-      enabled: false,
+      enabled: true,
       title: "SMPP Connectivity",
       badge: "SMPP",
       subTitle: "Direct SMPP Binds",

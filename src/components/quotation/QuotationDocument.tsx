@@ -29,7 +29,7 @@ export function QuotationDocument({ data }: { data: Quotation }) {
 /* --------------------------------- Cover --------------------------------- */
 
 function CoverPage({ data }: { data: Quotation }) {
-  const services = ["SMS", "WhatsApp", "Meta Verified", "IVR & OBD", "API"];
+  const services = ["CPaaS", "SMS & RCS", "WhatsApp", "Voice & IVR", "Email & SMPP"];
   const proposalFx = useFocusProps("client:proposal");
   const dateFx = useFocusProps("client:date");
   return (
@@ -350,8 +350,9 @@ function ProductPage({ product }: { product: Product }) {
         style={{ left: "20mm", right: "20mm", top: "106mm", bottom: "24mm", overflow: "hidden" }}
       >
         <div {...priceFx} style={{ marginLeft: "4mm", marginRight: "4mm", flexShrink: 0 }}>
-          {product.key === "cpaas" ? (
+          {product.tables.map((t, i) => (
             <table
+              key={i}
               className="w-full"
               style={{
                 borderCollapse: "collapse",
@@ -363,75 +364,82 @@ function ProductPage({ product }: { product: Product }) {
               <thead>
                 <tr>
                   <Th width="62%" align="center">
-                    {product.tables[0]?.slabLabel || "Particulars"}
+                    {t.slabLabel || "Credit Slab"}
                   </Th>
                   <Th width="38%" align="center">
-                    {product.tables[0]?.rateLabel || "Average Rate"}
+                    {t.rateLabel || "Rate"}
                   </Th>
                 </tr>
               </thead>
               <tbody>
-                {product.tables.map((row, i) => (
-                  <tr key={i}>
-                    <Td align="left" style={{ paddingLeft: "5mm", fontWeight: 600 }}>
-                      {row.slabValue}
-                    </Td>
-                    <Td align="center" style={{ fontWeight: 700 }}>
-                      {row.rateValue}
-                    </Td>
-                  </tr>
-                ))}
+                <tr>
+                  <Td align="center" style={{ fontWeight: 600 }}>
+                    {t.slabValue}
+                  </Td>
+                  <Td align="center" style={{ fontWeight: 700 }}>
+                    {t.rateValue}
+                  </Td>
+                </tr>
               </tbody>
             </table>
-          ) : (
-            <>
-              {product.tables.map((t, i) => (
-                <table
-                  key={i}
-                  className="w-full"
-                  style={{ borderCollapse: "collapse", marginBottom: "4mm", fontSize: "3.6mm" }}
-                >
-                  <thead>
-                    <tr>
-                      <Th>{t.slabLabel}</Th>
-                      <Th>{t.rateLabel}</Th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <Td>{t.slabValue}</Td>
-                      <Td>{t.rateValue}</Td>
-                    </tr>
-                  </tbody>
-                </table>
-              ))}
+          ))}
 
-              <table className="w-full" style={{ borderCollapse: "collapse", fontSize: "3.3mm" }}>
-                <thead>
-                  <tr>
-                    <Th small>Setup Charges</Th>
-                    <Th small>Monthly Charges</Th>
-                    <Th small>Price</Th>
-                    <Th small>GST (%)</Th>
-                    <Th small>Final Total</Th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <Td small>₹ {currency(product.pricing.setup)}</Td>
-                    <Td small>₹ {currency(product.pricing.monthly)}</Td>
-                    <Td small>₹ {currency(product.pricing.price)}</Td>
-                    <Td small>{product.pricing.gst}%</Td>
-                    <Td small highlight>
-                      ₹{" "}
-                      {product.pricing.total && Number(product.pricing.total) > 0
-                        ? currency(product.pricing.total)
-                        : currency(String(total))}
-                    </Td>
-                  </tr>
-                </tbody>
-              </table>
-            </>
+          {product.agentLimitValue && product.agentLimitValue.trim() !== "" && (
+            <table
+              className="w-full"
+              style={{
+                borderCollapse: "collapse",
+                marginBottom: "4mm",
+                fontSize: "3.5mm",
+                border: `0.35mm solid ${NAVY}`,
+              }}
+            >
+              <thead>
+                <tr>
+                  <Th width="100%" align="center">
+                    {product.agentLimitLabel || "Total Agent Limit"}
+                  </Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td align="center" style={{ fontWeight: 700 }}>
+                    {product.agentLimitValue}
+                  </Td>
+                </tr>
+              </tbody>
+            </table>
+          )}
+
+          {(product.pricing.setup !== "0" ||
+            product.pricing.monthly !== "0" ||
+            product.pricing.price !== "0" ||
+            (product.pricing.total && Number(product.pricing.total) > 0)) && (
+            <table className="w-full" style={{ borderCollapse: "collapse", fontSize: "3.3mm", marginBottom: "4mm" }}>
+              <thead>
+                <tr>
+                  <Th small>{product.pricing.setupLabel || "Setup Charges"}</Th>
+                  <Th small>{product.pricing.monthlyLabel || "Monthly Charges"}</Th>
+                  <Th small>{product.pricing.priceLabel || "Price"}</Th>
+                  <Th small>{product.pricing.gstLabel || "GST (%)"}</Th>
+                  <Th small>{product.pricing.totalLabel || "Final Total"}</Th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <Td small>₹ {currency(product.pricing.setup)}</Td>
+                  <Td small>₹ {currency(product.pricing.monthly)}</Td>
+                  <Td small>₹ {currency(product.pricing.price)}</Td>
+                  <Td small>{product.pricing.gst}%</Td>
+                  <Td small highlight>
+                    ₹{" "}
+                    {product.pricing.total && Number(product.pricing.total) > 0
+                      ? currency(product.pricing.total)
+                      : currency(String(total))}
+                  </Td>
+                </tr>
+              </tbody>
+            </table>
           )}
         </div>
 
